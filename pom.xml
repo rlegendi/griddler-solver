@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>hu.elte.inf.rlegendi</groupId>
+	<artifactId>griddler-solver</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>griddler-solver</name>
+	<description>Evolutionary solver application for the Griddler puzzle.</description>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<organization>
+		<name>Eötvös Loránd University, Faculty of Informatics</name>
+		<url>http://inf.elte.hu/</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<id>rlegendi</id>
+			<name>Richard O. Legendi</name>
+			<email>richard.legendi@gmail.com</email>
+			<url>http://people.inf.elte.hu/legendi</url>
+			<organization>AITIA International, Inc.</organization>
+			<organizationUrl>http://aitia.ai</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+
+	<build>
+		<sourceDirectory>src/</sourceDirectory>
+		<testSourceDirectory>test/</testSourceDirectory>
+
+		<resources>
+			<resource>
+				<directory>res/</directory>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<inceptionYear>2010</inceptionYear>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jgap</groupId>
+			<artifactId>jgap</artifactId>
+			<version>3.4.4</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+</project>
