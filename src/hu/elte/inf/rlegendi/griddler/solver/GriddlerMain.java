@@ -15,7 +15,8 @@ import org.jgap.impl.IntegerGene;
 public class GriddlerMain {
 	public static void main(final String[] args)
 			throws IOException, InvalidConfigurationException {
-		final Griddler griddler = Griddler.load( "bit_2010_12.gr" );
+		//final Griddler griddler = Griddler.load( "bit_2010_12.gr" );
+		final Griddler griddler = Griddler.load( "nlogo_sample.gr" );
 		
 		final Configuration config = new DefaultConfiguration();
 		final GriddlerFitness fitness = new GriddlerFitness( griddler );
@@ -46,7 +47,7 @@ public class GriddlerMain {
 			double value = fitness.evaluate( fittest );
 			System.out.println( "Fitness: " + value );
 			
-			if ( 2 * griddler.getN() * griddler.getN() == value ) {
+			if ( fitness.getMaxValue() == value ) {
 				break;
 			}
 		}

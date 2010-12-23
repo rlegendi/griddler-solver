@@ -2,6 +2,8 @@ package hu.elte.inf.rlegendi.griddler.solver;
 
 import hu.elte.inf.rlegendi.griddler.solver.data.Griddler;
 
+import java.util.ArrayList;
+
 import org.jgap.FitnessFunction;
 import org.jgap.IChromosome;
 
@@ -48,8 +50,17 @@ public class GriddlerFitness
 //		
 //		return maxDiff - actDiff;
 		
-		int diff = Math.abs( sum( constraints ) - sum( sequence ) );
-		return N - diff;
+//		int diff = Math.abs( sum( constraints ) - sum( sequence ) );
+//		return N - diff;
+		
+		int ret = 0;
+		final int[] subsums = subsums( sequence );
+		for (int i = 0; i < Math.min( subsums.length, constraints.length ); ++i) {
+			if ( subsums[i] == constraints[i] ) {
+				ret++;
+			}
+		}
+		return ret;
 	}
 	
 	private int[] getRow(final IChromosome subject, final int row) {
@@ -83,4 +94,40 @@ public class GriddlerFitness
 		return ret;
 	}
 	
+	private int[] subsums(final int[] arr) {
+		final ArrayList<Integer> list = new ArrayList<Integer>();
+		int sum = 0;
+		for (int i = 0; i < arr.length; ++i) {
+			if ( 0 == arr[i] ) {
+				if ( sum != 0 ) {
+					list.add( sum );
+				}
+				sum = 0;
+			} else {
+				sum++;
+			}
+		}
+		
+		if ( sum != 0 ) {
+			list.add( sum );
+		}
+		
+		final int[] ret = new int[list.size()];
+		for (int i = 0; i < ret.length; ++i) {
+			ret[i] = list.get( i );
+		}
+		
+		return ret;
+	}
+	
+	public int getMaxValue() {
+		int ret = 0;
+		
+		for (int i = 0; i < griddler.getN(); ++i) {
+			ret += griddler.getRowConstraints( i ).length;
+			ret += griddler.getColConstraints( i ).length;
+		}
+		
+		return ret;
+	}
 }
