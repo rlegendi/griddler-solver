@@ -55,6 +55,10 @@ public class GriddlerFitness
 		
 		int ret = 0;
 		final int[] subsums = subsums( sequence );
+		if (subsums.length != constraints.length) {
+			return 0;
+		}
+		
 		for (int i = 0; i < Math.min( subsums.length, constraints.length ); ++i) {
 			if ( subsums[i] == constraints[i] ) {
 				ret++;
