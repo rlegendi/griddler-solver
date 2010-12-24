@@ -21,7 +21,7 @@ public class GriddlerSolution {
 		final StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < griddler.getN(); ++i) {
 			for (int j = 0; j < griddler.getN(); ++j) {
-				sb.append( ( ( (Integer) genes[i*griddler.getN() + j].getAllele() ).intValue() > 0 ) ? "#" : " " );
+				sb.append( ( (Boolean) genes[i*griddler.getN() + j].getAllele() ) ? "#" : " " );
 			}
 			
 			sb.append( EOL );

@@ -1,5 +1,6 @@
 package hu.elte.inf.rlegendi.griddler.solver;
 
+import hu.elte.inf.rlegendi.griddler.solver.algorithm.ConstraintBasedGriddlerFitness;
 import hu.elte.inf.rlegendi.griddler.solver.data.Griddler;
 
 import java.io.IOException;
@@ -9,8 +10,9 @@ import org.jgap.Configuration;
 import org.jgap.Genotype;
 import org.jgap.IChromosome;
 import org.jgap.InvalidConfigurationException;
+import org.jgap.impl.BooleanGene;
 import org.jgap.impl.DefaultConfiguration;
-import org.jgap.impl.IntegerGene;
+import org.jgap.impl.MutationOperator;
 
 public class GriddlerMain {
 	public static void main(final String[] args)
@@ -19,23 +21,32 @@ public class GriddlerMain {
 		final Griddler griddler = Griddler.load( "nlogo_sample.gr" );
 		
 		final Configuration config = new DefaultConfiguration();
-		final GriddlerFitness fitness = new GriddlerFitness( griddler );
+		final ConstraintBasedGriddlerFitness fitness = new ConstraintBasedGriddlerFitness( griddler );
 		config.setFitnessFunction( fitness );
 		
-		final int geneSize = griddler.getN() * griddler.getN();
-		final IntegerGene[] gene = new IntegerGene[geneSize];
+		config.addGeneticOperator( new MutationOperator(config) );
+		
+		final int geneSize = griddler.getN() * griddler.getN(); // row ordered representation
+		
+		// Note: Boolean gene.
+		// Since this Gene implementation only supports two different values (true and false), there's only a 50% chance
+		// that invocation of the setToRandomValue() method will actually change the value of this Gene (if it has a value).
+		// As a result, it may be desirable to use a higher overall mutation rate when this Gene implementation is in use.
+		
+		final BooleanGene[] gene = new BooleanGene[geneSize];
 		for (int i = 0; i < geneSize; ++i) {
-			gene[i] = new IntegerGene( config, 0, 1 );
+			gene[i] = new BooleanGene( config );
 		}
 		
 		final Chromosome chromosome = new Chromosome( config, gene );
 		config.setSampleChromosome( chromosome );
 		
-		config.setPopulationSize( 10 );
+		config.setPopulationSize( 100 );
 		
 		final Genotype population = Genotype.randomInitialGenotype( config );
 		
-		final long startTime = System.currentTimeMillis();
+		long time = - System.currentTimeMillis();
+		
 		while ( true ) {
 			for (int i = 0; i < 1000; ++i) {
 				population.evolve();
@@ -44,7 +55,7 @@ public class GriddlerMain {
 			final IChromosome fittest = population.getFittestChromosome();
 			final GriddlerSolution solution = new GriddlerSolution( griddler, fittest );
 			System.out.println( solution );
-			double value = fitness.evaluate( fittest );
+			final double value = fitness.evaluate( fittest );
 			System.out.println( "Fitness: " + value );
 			
 			if ( fitness.getMaxValue() == value ) {
@@ -52,8 +63,8 @@ public class GriddlerMain {
 			}
 		}
 		
-		final long endTime = System.currentTimeMillis();
-		System.out.println( "Total evolution time: " + ( endTime - startTime ) + " ms" );
+		time += System.currentTimeMillis();
+		System.out.println( "Total evolution time: " + time + " ms" );
 		
 		final IChromosome fittest = population.getFittestChromosome();
 		final GriddlerSolution solution = new GriddlerSolution( griddler, fittest );

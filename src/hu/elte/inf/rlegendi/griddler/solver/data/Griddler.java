@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class Griddler {
 	
-	// length of a chromosome
+	// Length of a chromosome
 	private final int N;
 	private final int[][] rowConstraints; // row -> constraints
 	private final int[][] colConstraints; // col -> constraints
