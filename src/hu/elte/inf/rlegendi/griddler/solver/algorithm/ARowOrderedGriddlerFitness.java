@@ -1,6 +1,6 @@
 package hu.elte.inf.rlegendi.griddler.solver.algorithm;
 
-import hu.elte.inf.rlegendi.griddler.solver.data.Griddler;
+import hu.elte.inf.rlegendi.griddler.solver.common.Griddler;
 
 import java.util.ArrayList;
 
@@ -33,6 +33,8 @@ public abstract class ARowOrderedGriddlerFitness
 		return ret;
 	}
 	
+	// ======================================================================================================================
+	
 	/**
 	 * @param sequence a row or column
 	 * @param constraints
@@ -40,7 +42,14 @@ public abstract class ARowOrderedGriddlerFitness
 	 */
 	public abstract int fitness(final int[] sequence, final int[] constraints);
 	
+	/**
+	 * To check if the iteration can be stopped.
+	 * 
+	 * @return
+	 */
 	public abstract int getMaxFitnessValue();
+	
+	// ======================================================================================================================
 	
 	protected int[] getRow(final IChromosome subject, final int row) {
 		final int[] ret = new int[N];
@@ -67,15 +76,19 @@ public abstract class ARowOrderedGriddlerFitness
 	
 	protected int sum(final int[] arr) {
 		int ret = 0;
+		
 		for (final int act : arr) {
 			ret += act;
 		}
+		
 		return ret;
 	}
 	
 	protected int[] subsums(final int[] arr) {
 		final ArrayList<Integer> list = new ArrayList<Integer>();
+		
 		int sum = 0;
+		
 		for (int i = 0; i < arr.length; ++i) {
 			if ( 0 == arr[i] ) {
 				if ( sum != 0 ) {

@@ -1,4 +1,4 @@
-package hu.elte.inf.rlegendi.griddler.solver;
+package hu.elte.inf.rlegendi.griddler.solver.common;
 
 public final class Constants {
 	

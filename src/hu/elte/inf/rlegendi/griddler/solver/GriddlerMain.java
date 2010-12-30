@@ -2,7 +2,9 @@ package hu.elte.inf.rlegendi.griddler.solver;
 
 import hu.elte.inf.rlegendi.griddler.solver.algorithm.ARowOrderedGriddlerFitness;
 import hu.elte.inf.rlegendi.griddler.solver.algorithm.DistancePowerGriddlerFitness;
-import hu.elte.inf.rlegendi.griddler.solver.data.Griddler;
+import hu.elte.inf.rlegendi.griddler.solver.common.Constants;
+import hu.elte.inf.rlegendi.griddler.solver.common.Griddler;
+import hu.elte.inf.rlegendi.griddler.solver.common.GriddlerSolution;
 
 import java.io.IOException;
 

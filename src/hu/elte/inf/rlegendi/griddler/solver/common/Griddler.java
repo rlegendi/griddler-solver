@@ -1,4 +1,4 @@
-package hu.elte.inf.rlegendi.griddler.solver.data;
+package hu.elte.inf.rlegendi.griddler.solver.common;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

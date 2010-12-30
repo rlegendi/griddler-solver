@@ -1,6 +1,6 @@
 package hu.elte.inf.rlegendi.griddler.solver.algorithm;
 
-import hu.elte.inf.rlegendi.griddler.solver.data.Griddler;
+import hu.elte.inf.rlegendi.griddler.solver.common.Griddler;
 
 public class DistancePowerGriddlerFitness
 		extends ARowOrderedGriddlerFitness {

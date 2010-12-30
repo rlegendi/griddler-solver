@@ -1,6 +1,5 @@
-package hu.elte.inf.rlegendi.griddler.solver;
+package hu.elte.inf.rlegendi.griddler.solver.common;
 
-import hu.elte.inf.rlegendi.griddler.solver.data.Griddler;
 
 import org.jgap.Gene;
 import org.jgap.IChromosome;
