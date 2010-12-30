@@ -40,6 +40,8 @@ public abstract class ARowOrderedGriddlerFitness
 	 */
 	public abstract int fitness(final int[] sequence, final int[] constraints);
 	
+	public abstract int getMaxValue();
+	
 	protected int[] getRow(final IChromosome subject, final int row) {
 		final int[] ret = new int[N];
 		final int rowOffset = row * N;
@@ -97,14 +99,4 @@ public abstract class ARowOrderedGriddlerFitness
 		return ret;
 	}
 	
-	public int getMaxValue() {
-		int ret = 0;
-		
-		for (int i = 0; i < griddler.getN(); ++i) {
-			ret += griddler.getRowConstraints( i ).length;
-			ret += griddler.getColConstraints( i ).length;
-		}
-		
-		return ret;
-	}
 }

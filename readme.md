@@ -4,7 +4,7 @@ Readme
 What is this?
 -------------
 This program is a demonstration application for evolutionary (actually, genetic)
-algorithm to solve nonograms. 
+algorithm how (*not*) to solve nonograms. 
 
 *What are nonograms?* Nonograms are picture logic puzzles in which cells in a
 grid have to be colored or left blank according to numbers given at the side of

@@ -27,4 +27,15 @@ public class ConstraintBasedGriddlerFitness
 		return ret;
 	}
 	
+	public int getMaxValue() {
+		int ret = 0;
+		
+		for (int i = 0; i < griddler.getN(); ++i) {
+			ret += griddler.getRowConstraints( i ).length;
+			ret += griddler.getColConstraints( i ).length;
+		}
+		
+		return ret;
+	}
+
 }

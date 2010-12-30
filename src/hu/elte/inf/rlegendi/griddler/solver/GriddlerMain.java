@@ -1,6 +1,7 @@
 package hu.elte.inf.rlegendi.griddler.solver;
 
-import hu.elte.inf.rlegendi.griddler.solver.algorithm.ConstraintBasedGriddlerFitness;
+import hu.elte.inf.rlegendi.griddler.solver.algorithm.ARowOrderedGriddlerFitness;
+import hu.elte.inf.rlegendi.griddler.solver.algorithm.DistancePowerGriddlerFitness;
 import hu.elte.inf.rlegendi.griddler.solver.data.Griddler;
 
 import java.io.IOException;
@@ -21,10 +22,11 @@ public class GriddlerMain {
 		final Griddler griddler = Griddler.load( "nlogo_sample.gr" );
 		
 		final Configuration config = new DefaultConfiguration();
-		final ConstraintBasedGriddlerFitness fitness = new ConstraintBasedGriddlerFitness( griddler );
+		//final ARowOrderedGriddlerFitness fitness = new ConstraintBasedGriddlerFitness( griddler );
+		final ARowOrderedGriddlerFitness fitness = new DistancePowerGriddlerFitness( griddler );
 		config.setFitnessFunction( fitness );
 		
-		config.addGeneticOperator( new MutationOperator(config) );
+		//config.addGeneticOperator( new MutationOperator( config ) );
 		
 		final int geneSize = griddler.getN() * griddler.getN(); // row ordered representation
 		
@@ -45,6 +47,7 @@ public class GriddlerMain {
 		
 		final Genotype population = Genotype.randomInitialGenotype( config );
 		
+		final int maxFitness = fitness.getMaxValue();
 		long time = - System.currentTimeMillis();
 		
 		while ( true ) {
@@ -56,9 +59,9 @@ public class GriddlerMain {
 			final GriddlerSolution solution = new GriddlerSolution( griddler, fittest );
 			System.out.println( solution );
 			final double value = fitness.evaluate( fittest );
-			System.out.println( "Fitness: " + value );
+			System.out.println( "Fitness: " + value + " / " + maxFitness );
 			
-			if ( fitness.getMaxValue() == value ) {
+			if ( maxFitness == value ) {
 				break;
 			}
 		}
