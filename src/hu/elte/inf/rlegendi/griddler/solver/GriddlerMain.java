@@ -16,18 +16,12 @@ import org.jgap.impl.DefaultConfiguration;
 import org.jgap.impl.MutationOperator;
 
 public class GriddlerMain {
-	private static final int INIT_POPULATION_SIZE = 100;
-	private static final int REPORTING_INTERVAL = 1000;
-	
-	/** Desired rate of mutation, expressed as the denominator of the 1 / X fraction. */
-	private static final int PROBABILITY_MUTATION = 100;
-	
 	private static Configuration setupConfiguration(final Griddler griddler, final ARowOrderedGriddlerFitness fitness)
 			throws InvalidConfigurationException {
 		final Configuration config = new DefaultConfiguration();
 		config.setFitnessFunction( fitness );
 		
-		config.addGeneticOperator( new MutationOperator( config, PROBABILITY_MUTATION ) ); // P_m = 0.01
+		config.addGeneticOperator( new MutationOperator( config, Constants.PROBABILITY_MUTATION ) ); // P_m = 0.01
 		final int geneSize = griddler.getN() * griddler.getN(); // Row ordered representation of the puzzle
 		
 		// Note: Boolean gene.
@@ -43,7 +37,7 @@ public class GriddlerMain {
 		final Chromosome chromosome = new Chromosome( config, gene );
 		config.setSampleChromosome( chromosome );
 		
-		config.setPopulationSize( INIT_POPULATION_SIZE );
+		config.setPopulationSize( Constants.INIT_POPULATION_SIZE );
 		return config;
 	}
 	
@@ -51,7 +45,7 @@ public class GriddlerMain {
 		final int maxFitness = fitness.getMaxFitnessValue();
 		
 		while ( true ) {
-			for (int i = 0; i < REPORTING_INTERVAL; ++i) {
+			for (int i = 0; i < Constants.REPORTING_INTERVAL; ++i) {
 				population.evolve();
 			}
 			
