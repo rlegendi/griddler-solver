@@ -5,14 +5,15 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Griddler {
-	
-	// Length of a chromosome
+	/** Length of a row/column, N*N is the length of a chromosome. */
 	private final int N;
+	
 	private final int[][] rowConstraints; // row -> constraints
 	private final int[][] colConstraints; // col -> constraints
 	
 	public Griddler(final int N, final int[][] rowConstraints, final int[][] colConstraints) {
 		super();
+		
 		this.N = N;
 		this.rowConstraints = rowConstraints;
 		this.colConstraints = colConstraints;
@@ -46,10 +47,6 @@ public class Griddler {
 		return new Griddler( N, rows, cols );
 	}
 	
-	public static Griddler fromSolution() {
-		return null;
-	}
-	
 	private static void fillConstraints(final BufferedReader br, final int N, final int[][] constraints)
 			throws IOException {
 		for (int i = 0; i < N; ++i) {
@@ -61,8 +58,4 @@ public class Griddler {
 		}
 	}
 	
-	public void save(final String path)
-			throws IOException {
-		;
-	}
 }

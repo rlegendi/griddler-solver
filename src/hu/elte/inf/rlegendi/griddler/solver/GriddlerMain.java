@@ -72,9 +72,13 @@ public class GriddlerMain {
 		final String puzzleToLoad = ( args.length > 0 ) ? args[0] : "nlogo_sample.gr";
 		final Griddler griddler = Griddler.load( puzzleToLoad );
 		
+		// ----------------------------------------------------------------------------------------------------------------------
 		// Modify this to play with different fitness functions
-		// See classes of package hu.elte.inf.rlegendi.griddler.solver.algorithm
+		// See classes of package hu.elte.inf.rlegendi.griddler.solver.algorithm for alternative implemented fitness functinos.
+		//final ARowOrderedGriddlerFitness fitness = new BoxBasedGriddlerFitness( griddler );
+		//final ARowOrderedGriddlerFitness fitness = new ConstraintBasedGriddlerFitness( griddler );
 		final ARowOrderedGriddlerFitness fitness = new DistancePowerGriddlerFitness( griddler );
+		// ----------------------------------------------------------------------------------------------------------------------
 		
 		// Create used JGAP configuration
 		final Configuration configuration = setupConfiguration( griddler, fitness );

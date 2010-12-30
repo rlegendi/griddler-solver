@@ -1,6 +1,7 @@
 package hu.elte.inf.rlegendi.griddler.solver.algorithm;
 
 import hu.elte.inf.rlegendi.griddler.solver.common.Griddler;
+import hu.elte.inf.rlegendi.griddler.solver.common.Utilities;
 
 public class DistancePowerGriddlerFitness
 		extends ARowOrderedGriddlerFitness {
@@ -18,7 +19,7 @@ public class DistancePowerGriddlerFitness
 	
 	public int fitness(final int[] sequence, final int[] constraints) {
 		int penalty = 0;
-		final int[] subsums = subsums( sequence );
+		final int[] subsums = Utilities.subsums( sequence );
 		
 		final int diff = Math.abs( subsums.length - constraints.length );
 		
