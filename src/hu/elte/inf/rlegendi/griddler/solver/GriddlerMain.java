@@ -16,19 +16,19 @@ import org.jgap.impl.DefaultConfiguration;
 import org.jgap.impl.MutationOperator;
 
 public class GriddlerMain {
-	public static void main(final String[] args)
-			throws IOException, InvalidConfigurationException {
-		//final Griddler griddler = Griddler.load( "bit_2010_12.gr" );
-		final Griddler griddler = Griddler.load( "nlogo_sample.gr" );
-		
+	private static final int INIT_POPULATION_SIZE = 100;
+	private static final int REPORTING_INTERVAL = 1000;
+	
+	/** Desired rate of mutation, expressed as the denominator of the 1 / X fraction. */
+	private static final int PROBABILITY_MUTATION = 100;
+	
+	private static Configuration setupConfiguration(final Griddler griddler, final ARowOrderedGriddlerFitness fitness)
+			throws InvalidConfigurationException {
 		final Configuration config = new DefaultConfiguration();
-		//final ARowOrderedGriddlerFitness fitness = new ConstraintBasedGriddlerFitness( griddler );
-		final ARowOrderedGriddlerFitness fitness = new DistancePowerGriddlerFitness( griddler );
 		config.setFitnessFunction( fitness );
 		
-		//config.addGeneticOperator( new MutationOperator( config ) );
-		
-		final int geneSize = griddler.getN() * griddler.getN(); // row ordered representation
+		config.addGeneticOperator( new MutationOperator( config, PROBABILITY_MUTATION ) ); // P_m = 0.01
+		final int geneSize = griddler.getN() * griddler.getN(); // Row ordered representation of the puzzle
 		
 		// Note: Boolean gene.
 		// Since this Gene implementation only supports two different values (true and false), there's only a 50% chance
@@ -43,34 +43,59 @@ public class GriddlerMain {
 		final Chromosome chromosome = new Chromosome( config, gene );
 		config.setSampleChromosome( chromosome );
 		
-		config.setPopulationSize( 100 );
-		
-		final Genotype population = Genotype.randomInitialGenotype( config );
-		
-		final int maxFitness = fitness.getMaxValue();
-		long time = - System.currentTimeMillis();
+		config.setPopulationSize( INIT_POPULATION_SIZE );
+		return config;
+	}
+	
+	private static void evolve(final Griddler griddler, final ARowOrderedGriddlerFitness fitness, final Genotype population) {
+		final int maxFitness = fitness.getMaxFitnessValue();
 		
 		while ( true ) {
-			for (int i = 0; i < 1000; ++i) {
+			for (int i = 0; i < REPORTING_INTERVAL; ++i) {
 				population.evolve();
 			}
 			
+			// Show a report of the current state
 			final IChromosome fittest = population.getFittestChromosome();
-			final GriddlerSolution solution = new GriddlerSolution( griddler, fittest );
-			System.out.println( solution );
 			final double value = fitness.evaluate( fittest );
+			final GriddlerSolution solution = new GriddlerSolution( griddler, fittest );
+			
+			System.out.println( solution );
 			System.out.println( "Fitness: " + value + " / " + maxFitness );
 			
-			if ( maxFitness == value ) {
+			if ( maxFitness <= value ) {
 				break;
 			}
 		}
+	}
+	
+	public static void main(final String[] args)
+			throws IOException, InvalidConfigurationException {
+		
+		// Load puzzle
+		final String puzzleToLoad = ( args.length > 0 ) ? args[0] : "nlogo_sample.gr";
+		final Griddler griddler = Griddler.load( puzzleToLoad );
+		
+		// Modify this to play with different fitness functions
+		// See classes of package hu.elte.inf.rlegendi.griddler.solver.algorithm
+		final ARowOrderedGriddlerFitness fitness = new DistancePowerGriddlerFitness( griddler );
+		
+		// Create used JGAP configuration
+		final Configuration configuration = setupConfiguration( griddler, fitness );
+		final Genotype population = Genotype.randomInitialGenotype( configuration );
+		
+		long time = - System.currentTimeMillis();
+		
+		// Evolution takes place here
+		evolve( griddler, fitness, population );
 		
 		time += System.currentTimeMillis();
 		System.out.println( "Total evolution time: " + time + " ms" );
 		
+		// Show the solution
 		final IChromosome fittest = population.getFittestChromosome();
 		final GriddlerSolution solution = new GriddlerSolution( griddler, fittest );
 		System.out.println( solution );
 	}
+	
 }

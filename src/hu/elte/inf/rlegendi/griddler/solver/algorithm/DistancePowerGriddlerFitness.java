@@ -37,7 +37,7 @@ public class DistancePowerGriddlerFitness
 		return SEQ_MAX_SCORE - ( penalty + WEIGHT_DIFF * diff );
 	}
 	
-	public int getMaxValue() {
+	public int getMaxFitnessValue() {
 		return maxFitness;
 	}
 }

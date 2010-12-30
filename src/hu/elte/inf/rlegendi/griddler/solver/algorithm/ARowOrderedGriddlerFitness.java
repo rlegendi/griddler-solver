@@ -40,7 +40,7 @@ public abstract class ARowOrderedGriddlerFitness
 	 */
 	public abstract int fitness(final int[] sequence, final int[] constraints);
 	
-	public abstract int getMaxValue();
+	public abstract int getMaxFitnessValue();
 	
 	protected int[] getRow(final IChromosome subject, final int row) {
 		final int[] ret = new int[N];

@@ -27,7 +27,7 @@ public class ConstraintBasedGriddlerFitness
 		return ret;
 	}
 	
-	public int getMaxValue() {
+	public int getMaxFitnessValue() {
 		int ret = 0;
 		
 		for (int i = 0; i < griddler.getN(); ++i) {
